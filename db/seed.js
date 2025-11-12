@@ -11,6 +11,20 @@ async function seed() {
   await db.query("DELETE FROM playlist_tracks;");
   await db.query("DELETE FROM playlist;");
   await db.query("DELETE FROM tracks;");
+  await db.query("DELETE FROM users");
+
+  const users = [
+    ["Mcqueen", "hashed_password_1"],
+    ["Chick hicks", "hashed_password_2"],
+    ["The king", "hashed_password_3"],
+  ];
+
+  for (const [username, password_hash] of users) {
+    await db.query(
+      "INSERT INTO users (username, password_hash) VALUES ($1, $2);",
+      [username, password_hash]
+    );
+  }
 
   const tracks = [
     ["God’s Plan", 210000],
@@ -36,7 +50,10 @@ async function seed() {
   ];
 
   for (const [name, duration_ms] of tracks) {
-    await db.query("INSERT INTO tracks (name, duration_ms) VALUES ($1, $2);");
+    await db.query("INSERT INTO tracks (name, duration_ms) VALUES ($1, $2);", [
+      name,
+      duration_ms,
+    ]);
   }
 
   const playlists = [

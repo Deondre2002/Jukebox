@@ -1,6 +1,15 @@
 DROP TABLE IF EXISTS playlist_tracks;
 DROP TABLE IF EXISTS playlist;
 DROP TABLE IF EXISTS tracks;
+DROP TABLE IF EXISTS users;
+
+
+CREATE TABLE users(
+    id SERIAL PRIMARY KEY,
+    username TEXT NOT NULL,
+    password_hash TEXT NOT NULL
+);
+
 
 CREATE TABLE tracks (
     id SERIAL PRIMARY KEY,
@@ -11,7 +20,8 @@ CREATE TABLE tracks (
 CREATE TABLE playlist (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL, 
-    description TEXT NOT NULL
+    description TEXT NOT NULL,
+     user_id INTEGER REFERENCES users(id)
 );
 CREATE TABLE playlist_tracks (
     id SERIAL PRIMARY KEY,
